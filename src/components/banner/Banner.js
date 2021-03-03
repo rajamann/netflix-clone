@@ -1,30 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Banner.css'
+import requests from '../../Requests'
+import axios from '../../axios'
 
 export const Banner = () => {
+  const [movie, setMovie] = useState({})
+
   const truncate = (string, n) =>
     string?.length > n ? `${string.substr(0, n - 1)}...` : string
+
+  const fetchMovie = async () => {
+    const response = await axios.get(requests.fetchNetflixOriginals)
+    setMovie(
+      response.data.results[
+        Math.floor(Math.random() * response.data.results.length - 1)
+      ]
+    )
+    return response
+  }
+
+  useEffect(() => {
+    fetchMovie()
+  }, [])
+
+  console.log('movie', movie)
 
   return (
     <header
       className='banner'
       style={{
         backgroundSize: 'cover',
-        backgroundImage: `url(https://images.bonanzastatic.com/afu/images/15f4/4c89/f1cc_6116498539/__57.jpg)`,
+        backgroundImage: `url('https://image.tmdb.org/t/p/original${movie?.backdrop_path}')`,
         backgroundPosition: 'center center'
       }}
     >
       <div className='banner__contents'>
-        <h1 className='banner__title'>Movie Title</h1>
+        <h1 className='banner__title'>
+          {movie?.title || movie?.name || movie?.original_name}
+        </h1>
         <div className='banner__buttons'>
           <button className='banner__button'>Play</button>
           <button className='banner__button'>My List</button>
         </div>
         <h1 className='banner__description'>
-          {truncate(
-            'test testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest testtest test',
-            150
-          )}
+          {truncate(movie?.overview, 150)}
         </h1>
       </div>
 
