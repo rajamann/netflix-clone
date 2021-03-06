@@ -23,8 +23,6 @@ export const Banner = () => {
     fetchMovie()
   }, [])
 
-  console.log('movie', movie)
-
   return (
     <header
       className='banner'
