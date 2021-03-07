@@ -1,14 +1,22 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import './App.css'
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import HomeScreen from './components/homescreen/HomeScreen'
 
-function App() {
+function App () {
   return (
-    <div className="app">
-      <HomeScreen />
+    <div className='app'>
+      <Router>
+        <Switch>
+          <Route path='/'>
+            <HomeScreen />
+          </Route>
+        </Switch>
+      </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -7,15 +7,15 @@ export const Row = ({ title, fetchUrl, isLargeRow = false }) => {
 
   const base_url = 'https://image.tmdb.org/t/p/original'
 
-  const fetchMovies = async () => {
-    const response = await axios.get(fetchUrl)
-    setMovies(response.data.results)
-    return response
-  }
-
   useEffect(() => {
+    const fetchMovies = async () => {
+      const response = await axios.get(fetchUrl)
+      setMovies(response.data.results)
+      return response
+    }
+
     fetchMovies()
-  }, [])
+  }, [fetchUrl])
 
   const renderMovies = () =>
     movies?.map(
